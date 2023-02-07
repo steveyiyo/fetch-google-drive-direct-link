@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/antchfx/htmlquery"
@@ -53,7 +54,17 @@ func FetchGoogleDriveDirectURL(fileId string) string {
 }
 
 func main() {
-	id := ""
+	if len(os.Args) < 1 {
+		fmt.Println("Please input Google Drive share link.")
+		return
+	}
+	id := os.Args[1]
+
 	ref := FetchGoogleDriveDirectURL(id)
+
+	if ref == "" {
+		fmt.Println("Can not get direct download link.")
+		return
+	}
 	fmt.Println(ref)
 }
